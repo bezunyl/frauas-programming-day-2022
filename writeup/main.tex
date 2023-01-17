@@ -5,6 +5,13 @@
 \usepackage{verbatim}
 \usepackage{adjustbox}
 \usepackage{xcolor}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,260mm},
+ left=20mm,
+ top=20mm,
+ }
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -46,7 +53,7 @@
 % 12) L: https://open.kattis.com/contests/jbc6qj/problems/fiftyshades
 
 \title{Frankfurt University of Applied Sciences\\Programming Day Contest 2022}
-\author{Benedikt Zundel}
+\author{Benedikt Zundel and Contributors}
 \date{Decembter 8\textsuperscript{th} 2022}
 
 \begin{document}
@@ -66,7 +73,7 @@
 This document serves as a writeup for the Frankfurt University of Applied Sciences Programming Day Contest hosted by Prof. Dr. Logofatu on December 8\textsuperscript{th} 2022.
 It contains an outline of the problems presented during the contest with information about difficulty\footnote[1]{The difficulty of the problems may change \cite{kattis}. Given level corresponds to the difficulty viewed on 15\textsuperscript{th} of December 2022.} for revision and demonstrates a possible way of solving them (in Python).
 
-A repository containing all the solutions contained in this document can be found at https://github.com/bezunyl/frauas-programming-day-2022.
+A repository containing all the solutions contained in this document and the document itself can be found at https://github.com/bezunyl/frauas-programming-day-2022. Contributing is highly encouraged, instructions to doing so can be found in the repository's readme file.
 
 \newpage
 
@@ -127,6 +134,8 @@ This leaves us with a fairly straightforward problem: We have to count how many 
 The above is an implementation of what was explained prior. First we receive the two lines of input as store them in variables, $n$ being the amount of total lectures and $ls$ being the presence of a coffee machine in the lecture hall, respective to its index. Two more variables are initialized to keep track of the amount of full coffee cups the student has (initialized to 0) and the amount of lectures she's awake in (the output), respectively. Following those two initializations is the beginning of a for loop which iterates over $ls$ to read the presence of a coffee machine in each lectures hall. The dicision tree explained above is then implemented with if-statements. Finally, the output is printed to the terminal and the program terminates.
 
 \subsection{B: Estimating the Area of a Circle}
+
+Problem B is also quite straightforward, as it is essentially pure mathematics that are applied.
 
 \lstinputlisting[language=Python, caption="Estimating the Area of a Circle" Solution]{../B/solution.py}
 
