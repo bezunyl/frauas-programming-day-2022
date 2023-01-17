@@ -1,7 +1,7 @@
 import math
 
-def realArea(rad):
-    return math.pi * rad ** 2
+def realArea(r):
+    return math.pi * r ** 2
 
 def approxArea(r, pm, pin):
     return (pin / pm) * ((r * 2) ** 2)

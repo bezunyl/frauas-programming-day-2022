@@ -1,0 +1,195 @@
+\documentclass{article}
+
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{adjustbox}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% 1) A: https://open.kattis.com/contests/jbc6qj/problems/coffeecupcombo
+% 2) B: https://open.kattis.com/contests/jbc6qj/problems/estimatingtheareaofacircle
+% 3) C: https://open.kattis.com/contests/jbc6qj/problems/funhouse
+% 4) D: https://open.kattis.com/contests/jbc6qj/problems/espresso
+% 5) E: https://open.kattis.com/contests/jbc6qj/problems/peasoup
+% 6) F: https://open.kattis.com/contests/jbc6qj/problems/mathtrade
+% 7) G: https://open.kattis.com/contests/jbc6qj/problems/lovepolygon
+% 8) H: https://open.kattis.com/contests/jbc6qj/problems/santaklas
+% 9) I: https://open.kattis.com/contests/jbc6qj/problems/triangleornaments
+% 10) J: https://open.kattis.com/contests/jbc6qj/problems/sacredtexts
+% 11) K: https://open.kattis.com/contests/jbc6qj/problems/spellingbee
+% 12) L: https://open.kattis.com/contests/jbc6qj/problems/fiftyshades
+
+\title{Frankfurt University of Applied Sciences\\Programming Day Contest 2022}
+\author{Benedikt Zundel}
+\date{Decembter 8\textsuperscript{th} 2022}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+
+
+\section{Introduction}
+
+This document serves as a writeup for the Frankfurt University of Applied Sciences Programming Day Contest hosted by Prof. Dr. Logofatu on December 8\textsuperscript{th} 2022.
+It contains an outline of the problems presented during the contest with information about difficulty\footnote[1]{The difficulty of the problems may change \cite{kattis}. Given level corresponds to the difficulty viewed on 15\textsuperscript{th} of December 2022.} for revision and demonstrates a possible way of solving them (in Python).
+
+A repository containing all the solutions contained in this document can be found at https://github.com/bezunyl/frauas-programming-day-2022.
+
+\newpage
+
+
+\section{Problem Overview}
+
+According to Kattis' Terms of Service \cite{kattis-tos} it is prohibited to copy any content displayed on their site, due to which I cannot display the problems and their descriptions in full within this document. However, the below table contains the name and difficulty to each questions of the contest and a link under which it can be found on the official Kattis webpage.
+
+\hfill
+
+\begin{adjustbox}{center}
+	\begin{tabular}{ | c | c | c | c | }
+		\hline
+		\textbf{Tag} & \textbf{Name} & \textbf{Difficulty} & \textbf{Link} \\
+		\hline
+		\hline
+		A & Coffee Cup Combo & 1.5 Easy & https://open.kattis.com/problems/coffeecupcombo \\
+		\hline
+		B & Estimating the Area of a Circle & 1.5 Easy & https://open.kattis.com/problems/estimatingtheareaofacircle \\
+		\hline
+		C & Fun House & 1.9 Easy & https://open.kattis.com/problems/funhouse \\
+		\hline
+		D & Espresso! & 2.1 Easy & https://open.kattis.com/problems/espresso \\
+		\hline
+		E & Pea Soup and Pancakes & 2.2 Easy & https://open.kattis.com/problems/peasoup \\
+		\hline
+		F & Math Trade & 3.9 Medium & https://open.kattis.com/problems/mathtrade \\
+		\hline
+		G & Love Polygon & n.a. & n.a. \\
+		\hline
+		H & Santa Klas & 2.8 Medium & https://open.kattis.com/problems/santaklas \\
+		\hline
+		I & Triangle Ornaments & n.a. & n.a. \\
+		\hline
+		J & Sacred Texts & 3.9 Medium & https://open.kattis.com/problems/sacredtexts \\
+		\hline
+		K & Spelling Bee & 2.1 Easy & https://open.kattis.com/problems/spellingbee \\
+		\hline
+		L & Fifty Shades of Pink & 2.1 Easy & https://open.kattis.com/problems/fiftyshades \\
+		\hline
+	\end{tabular}
+\end{adjustbox}
+
+\newpage
+
+
+
+\section{Solutions}
+
+\subsection{A: Coffee Cup Combo}
+
+In this problem we help a student figure out how many lectures she can stay awake for, based on the premise that she can only stay awake if she drinks one coffee per lecture. We are given the amount of lectures that the student attends on a single day and information for each lecture about whether or not the lecture hall contains a coffee machine to refill her two cups.
+
+This leaves us with a fairly straightforward problem: We have to count how many lectures she can stay awake for by tracking the amount of full coffee cups she has. To do so, we view all possible situations. Either there is a coffee machine in the lecture hall, or there isn't (case 1 and 0, respectively). In case 1, we do not worry if she currently has any cups of coffee left, as she can fill both cups before the lecture, drink on during the lecture and finally fill both cups up again after the lecture. Therefore, we just increment the count of lecutres she can stay awake for and reset her remaining full cups to two. In case 0 there are two branches we have to consider: Either she has at least one cup of coffee left (case $0_y$) or both her cups are empty (case $0_n$). In case $0_y$ we simply increment the count of lectures she does not sleep in and decrement the variable keeping track of how many cups of coffee she has left. Case $0_n$ is simple, as we do nothing.
+
+\lstinputlisting[language=Python, caption="Coffee Cup Combo Solution"]{../A/solution.py}
+
+The above is an implementation of what was explained prior. First we receive the two lines of input as store them in variables, $n$ being the amount of total lectures and $ls$ being the presence of a coffee machine in the lecture hall, respective to its index. Two more variables are initialized to keep track of the amount of full coffee cups the student has (initialized to 0) and the amount of lectures she's awake in (the output), respectively. Following those two initializations is the beginning of a for loop which iterates over $ls$ to read the presence of a coffee machine in each lectures hall. The dicision tree explained above is then implemented with if-statements. Finally, the output is printed to the terminal and the program terminates.
+
+\subsection{B: Estimating the Area of a Circle}
+
+\lstinputlisting[language=Python, caption="Estimating the Area of a Circle" Solution]{../B/solution.py}
+
+\subsection{C: Fun House}
+
+\lstinputlisting[language=Python, caption="Fun House" Solution]{../C/solution.py}
+
+\subsection{D: Espresso!}
+
+\lstinputlisting[language=Python, caption="Espresso!" Solution]{../D/solution.py}
+
+\subsection{E: Pea Soup and Pancakes!}
+
+\lstinputlisting[language=Python, caption="Pea Soup and Pancakes!" Solution]{../E/solution.py}
+
+\subsection{F: Math Trade}
+
+\lstinputlisting[language=Python, caption="Math Trade" Solution]{../F/solution.py}
+
+\subsection{G: Love Polygon}
+
+\textbf{Missing content}
+
+% \lstinputlisting[language=Python, caption="Love Polygon" Solution]{../G/solution.py}
+
+\subsection{H: Santa Klas}
+
+\lstinputlisting[language=Python, caption="Santa Klas" Solution]{../H/solution.py}
+
+\subsection{I: Triangle Ornaments}
+
+\textbf{Missing content}
+
+% \lstinputlisting[language=Python, caption="Triangle Ornaments" Solution]{../I/solution.py}
+
+\subsection{J: Sacred Texts}
+
+\lstinputlisting[language=Python, caption="Sacred Texts" Solution]{../J/solution.py}
+
+\subsection{K: Spelling Bee}
+
+\lstinputlisting[language=Python, caption="Spelling Bee" Solution]{../K/solution.py}
+
+\subsection{L: Fifty Shades of Pink}
+
+\lstinputlisting[language=Python, caption="Fifty Shades of Pink" Solution]{../L/solution.py}
+
+
+
+
+
+
+
+
+\newpage
+
+\begin{thebibliography}{1}
+\bibitem{kattis}
+Kattis \emph{Ranklist, scores and difficulties}, https://open.kattis.com/help/ranklist.
+
+\bibitem{kattis-tos}
+Kattis \emph{Terms of Service}, https://open.kattis.com/help/tos
+
+\end{thebibliography}
+
+\end{document}
